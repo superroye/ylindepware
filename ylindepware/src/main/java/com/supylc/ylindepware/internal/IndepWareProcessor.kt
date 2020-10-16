@@ -30,27 +30,49 @@ object IndepWareProcessor {
         }
     }
 
+    /**
+     * 设置主进程监听eventBus
+     */
     fun setMainEventBusCallback(eventBusCallback: IEventBusCallback) {
         mMainProcessorInner.setMainEventBusCallback(eventBusCallback)
     }
 
+    /**
+     * 创建MainInterfaceStub
+     */
     fun newMainInterfaceStub(): IBinder {
         return mMainProcessorInner.newMainInterfaceStub()
     }
 
+    /**
+     * activity退出调用
+     */
     fun tryStopMainServiceBind(activity: Activity) {
         mSubProcessorInner.tryStopMainServiceBind(activity)
     }
 
+    /**
+     * 连接主进程服务成功后，设置本地interface
+     */
     fun setMainServiceBinder(serviceBinder: MainInterface) {
         mSubProcessorInner.setMainServiceBinder(serviceBinder)
     }
 
+    /**
+     * 当前进程发送事件
+     */
     fun sendEvent(event: Any) {
         if (IndepWareConfigs.isMainProcess()) {
             return mMainProcessorInner.sendEvent(event)
         }
         return mSubProcessorInner.sendEvent(event)
+    }
+
+    /**
+     * 子进程已连接主进程服务
+     */
+    fun isServiceReady(): Boolean {
+        return mSubProcessorInner.isServiceReady()
     }
 
     /**

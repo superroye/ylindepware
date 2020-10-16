@@ -36,6 +36,9 @@ internal class MainProcessorInner {
         return mService
     }
 
+    /**
+     * 打开主进程监听并设置event回调
+     */
     fun setMainEventBusCallback(eventBusCallback: IEventBusCallback) {
         Log.i(TAG, "setMainEventBusCallback")
         if (mMainEventBusListener == null) {
@@ -44,10 +47,16 @@ internal class MainProcessorInner {
         mMainEventBusListener?.setEventCallback(eventBusCallback)
     }
 
+    /**
+     * 当前进程发送事件
+     */
     fun sendEvent(event: Any) {
         EventUtils.sendEvent(event)
     }
 
+    /**
+     * unbind时需要释放主进程监听
+     */
     fun releaseOnUnBind() {
         Log.i(TAG, "releaseOnUnBind")
         mMainEventBusListener?.onDestroy()

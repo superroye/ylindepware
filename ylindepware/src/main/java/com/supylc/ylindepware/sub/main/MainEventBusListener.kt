@@ -25,6 +25,9 @@ class MainEventBusListener : IMainSendEvent {
         EventUtils.register(mListenerDelegate!!)
     }
 
+    /**
+     * 设置event回调
+     */
     fun setEventCallback(eventBusCallback: IEventBusCallback) {
         mEventBusCallback = eventBusCallback
     }
