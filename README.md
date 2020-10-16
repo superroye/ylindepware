@@ -1,4 +1,4 @@
-# ylindepware
+# 组件子进程独立运行适配方案
 
 activity进程化，比如可以用在WebViewActivity的子进程运行
 
