@@ -81,7 +81,7 @@ class MainProcessServiceBinder {
         override fun onServiceDisconnected(name: ComponentName) {
             Log.i(
                 TAG,
-                "onServiceDisconnected name=${name}",
+                "onServiceDisconnected name=${name}"
             )
             mMainInterface = null
         }
@@ -89,7 +89,7 @@ class MainProcessServiceBinder {
         override fun onBindingDied(name: ComponentName) {
             Log.i(
                 TAG,
-                "onBindingDied name=${name}",
+                "onBindingDied name=${name}"
             )
         }
     }

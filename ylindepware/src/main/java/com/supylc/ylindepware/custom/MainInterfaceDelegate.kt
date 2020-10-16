@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.gson.Gson
 import com.supylc.ylindepware.MainInterface
 import com.supylc.ylindepware.base.EventUtils
+import com.supylc.ylindepware.base.MainInterfaceDefault
 
 /**
  * Created by Supylc on 2020/10/13.
@@ -11,9 +12,9 @@ import com.supylc.ylindepware.base.EventUtils
  * 该类运行在主进程
  * 业务方需要重写该类：
  * 1、定义所需的方法
- * 2、sendEvent必须保留
+ * 2、sendEvent方法必须保留
  */
-class MainInterfaceDelegate : MainInterface.Default() {
+class MainInterfaceDelegate : MainInterfaceDefault() {
 
     companion object {
         private const val TAG = "MainInterfaceDelegate"

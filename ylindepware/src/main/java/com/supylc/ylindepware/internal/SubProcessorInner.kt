@@ -6,6 +6,7 @@ import androidx.collection.ArraySet
 import com.google.gson.Gson
 import com.supylc.ylindepware.MainInterface
 import com.supylc.ylindepware.base.EventUtils
+import com.supylc.ylindepware.base.MainInterfaceDefault
 import com.supylc.ylindepware.sub.binder.MainProcessServiceBinder
 
 /**
@@ -22,7 +23,7 @@ internal class SubProcessorInner {
     /**
      * 由于子进程的mService异步设置，此处设置默认空实现，保证mService调用不会为空，不然业务方可能会出现大面积崩溃
      */
-    private var mService: MainInterface? = MainInterface.Default()
+    private var mService: MainInterface? = MainInterfaceDefault()
     private var mMainProcessServiceBinder: MainProcessServiceBinder? = null
 
     /**
