@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.supylc.ylindepware.demo">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!--存储权限-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <!--友盟 Start-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--友盟 End-->
+
+
+    <!-- 同盾设备指纹 START -->
+    <!-- 必选权限 -->
+    <!--<uses-permission android:name="android.permission.INTERNET" />-->
+    <!--<uses-permission android:name="android.permission.READ_PHONE_STATE" />-->
+    <!--<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- 可选权限，不声明此部分权限将放弃部分设备信息的采集，对数据分析及设备指纹的精准度有一定影响 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>-->
+    <!--<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <application
+        android:name="com.supylc.ylindepware.demo.MyApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:testOnly="false"
+        android:theme="@style/AppTheme">
+        <activity android:name="com.supylc.ylindepware.demo.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.supylc.ylindepware.demo.RouteActivity">
+            <intent-filter>
+                <data android:scheme="test"></data>
+            </intent-filter>
+            <intent-filter>
+                <data android:scheme="http"></data>
+            </intent-filter>
+            <intent-filter>
+                <data android:scheme="https"></data>
+            </intent-filter>
+        </activity>
+        <activity android:name="com.supylc.ylindepware.demo.WebMainProcessActivity" />
+        <activity android:name="com.supylc.ylindepware.demo.WebSubProcessActivity" android:process=":webViewProcess" />
+        <activity android:name="com.supylc.ylindepware.demo.TestJumpActivity" />
+        <service android:name=".websub.main.MainProcessService">
+            <intent-filter>
+                <action android:name="com.supylc.webindependent.sub.mainprocess.BIND_MAIN_SERVICE"/>
+            </intent-filter>
+        </service>
+    </application>
+
+</manifest>

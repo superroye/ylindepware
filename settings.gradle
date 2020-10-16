@@ -1,0 +1,3 @@
+include ':ylindepware'
+include ':app'
+rootProject.name = "ylindepware_demo"

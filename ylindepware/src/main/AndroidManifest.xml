@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.supylc.ylindepware">
+
+    <application>
+
+        <service android:name="com.supylc.ylindepware.sub.main.MainProcessService">
+            <intent-filter>
+                <action android:name="com.supylc.webindependent.sub.mainprocess.BIND_MAIN_SERVICE" />
+            </intent-filter>
+        </service>
+    </application>
+</manifest>
