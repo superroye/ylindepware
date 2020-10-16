@@ -1,7 +1,6 @@
 # 组件子进程独立运行适配方案
 
-activity进程化，比如可以用在WebViewActivity的子进程运行
-
+activity进程化，比如可以用在WebViewActivity的子进程运行，也可以同时在主进程运行
 
 本模块支持多进程调用Activity，不限于WebViewActivity
 
