@@ -1,6 +1,9 @@
 package com.supylc.ylindepware
 
 import android.app.Activity
+import android.app.Application
+import android.util.Log
+import com.supylc.ylindepware.internal.IndepWareConfigs
 import com.supylc.ylindepware.internal.IndepWareProcessor
 
 /**
@@ -14,24 +17,40 @@ import com.supylc.ylindepware.internal.IndepWareProcessor
  */
 object IndepWare {
 
+    const val TAG = "IndepWare"
+
+    /**
+     * application初始化时调用
+     */
+    fun init(app: Application) {
+        Log.i(TAG, "init")
+        IndepWareConfigs.setApp(app)
+        if (IndepWareConfigs.isSubActivityProcess()) {
+            Log.i(TAG, "initSubCallback")
+            IndepWareConfigs.initSubCallback()
+        }
+    }
+
     /**
      * webAvtivity创建时调用
      */
     fun startOnActivityCreated(context: Activity) {
-        IndepWareProcessor.init(context)
+        Log.i(TAG, "startOnActivityCreated")
+        IndepWareProcessor.initMainInterface(context)
     }
 
     /**
      * activity退出回收时调用
      */
     fun stopOnActivityDestroyed(context: Activity) {
+        Log.i(TAG, "stopOnActivityDestroyed")
         IndepWareProcessor.tryStopMainServiceBind(context)
     }
 
     /**
      * webActivity,JsApi调用该服务
      */
-    fun getMainInterface(): MainInterface? {
+    fun getMainInterface(): MainInterface {
         return IndepWareProcessor.getMainInterface()
     }
 

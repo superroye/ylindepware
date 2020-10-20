@@ -13,16 +13,14 @@ object IndepWareProcessor {
     private val mSubProcessorInner = SubProcessorInner()
     private val mMainProcessorInner = MainProcessorInner()
 
-    fun getMainInterface(): MainInterface? {
+    fun getMainInterface(): MainInterface {
         if (IndepWareConfigs.isMainProcess()) {
             return mMainProcessorInner.getMainInterface()
         }
         return mSubProcessorInner.getMainServiceBinder()
     }
 
-    fun init(context: Activity) {
-        IndepWareConfigs.setApp(context.application)
-
+    fun initMainInterface(context: Activity) {
         if (!IndepWareConfigs.isMainProcess()) {
             mSubProcessorInner.startMainServiceBind(context)
         } else {

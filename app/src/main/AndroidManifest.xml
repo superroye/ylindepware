@@ -59,9 +59,9 @@
             </intent-filter>
         </activity>
         <activity android:name="com.supylc.ylindepware.demo.WebMainProcessActivity" />
-        <activity android:name="com.supylc.ylindepware.demo.WebSubProcessActivity" android:process=":webViewProcess" />
+        <activity android:name="com.supylc.ylindepware.demo.WebSubProcessActivity" android:process=":activitySubProcess" />
         <activity android:name="com.supylc.ylindepware.demo.TestJumpActivity" />
-        <service android:name=".websub.main.MainProcessService">
+        <service android:name="com.supylc.ylindepware.sub.main.MainProcessService">
             <intent-filter>
                 <action android:name="com.supylc.webindependent.sub.mainprocess.BIND_MAIN_SERVICE"/>
             </intent-filter>

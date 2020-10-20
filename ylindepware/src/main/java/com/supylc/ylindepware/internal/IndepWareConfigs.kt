@@ -10,12 +10,22 @@ import com.supylc.ylindepware.custom.ConfigProvider
 object IndepWareConfigs : IConfig by ConfigProvider() {
 
     private var mApp: Application? = null
+
+    /**
+     * 是否主进程
+     */
     private var mIsMainProcess = false
+    /**
+     * 是否Activity子进程
+     */
+    private var mIsSubActivityProcess = false
 
     fun setApp(app: Application) {
         if (mApp == null) {
             mApp = app
-            mIsMainProcess = Utils.isMainProcess()
+            val processName = Utils.getProcessName()
+            mIsMainProcess = app.packageName == processName
+            mIsSubActivityProcess = "${app.packageName}:${getActivityProcessName()}" == processName
         }
     }
 
@@ -25,6 +35,10 @@ object IndepWareConfigs : IConfig by ConfigProvider() {
 
     fun isMainProcess(): Boolean {
         return mIsMainProcess
+    }
+
+    fun isSubActivityProcess(): Boolean {
+        return mIsSubActivityProcess
     }
 
 }

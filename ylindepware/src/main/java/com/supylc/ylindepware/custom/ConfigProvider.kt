@@ -15,11 +15,18 @@ class ConfigProvider : IConfig {
         //连接的主进程Service的Action，主要必须与manifest配置一致
         private const val SERVICE_ACTION_BIND =
             "com.supylc.webindependent.sub.mainprocess.BIND_MAIN_SERVICE"
+
+        private const val SUB_ACTIVITY_PROCESS_NAME =
+            "activitySubProcess"
     }
 
     private val mEventClassSet = ArraySet<Class<*>>().also {
         it.add(Sub2MainEvent1::class.java)
         it.add(Sub2MainEvent2::class.java)
+    }
+
+    override fun initSubCallback() {
+
     }
 
     /**
@@ -43,6 +50,10 @@ class ConfigProvider : IConfig {
 
     override fun getMainServiceBindAction(): String {
         return SERVICE_ACTION_BIND
+    }
+
+    override fun getActivityProcessName(): String {
+        return SUB_ACTIVITY_PROCESS_NAME
     }
 
 }
