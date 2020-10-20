@@ -10,6 +10,7 @@ import android.os.IInterface
 import android.os.RemoteException
 import android.util.Log
 import com.supylc.ylindepware.MainInterface
+import com.supylc.ylindepware.internal.IndepWareConfigs
 import com.supylc.ylindepware.internal.IndepWareProcessor
 import com.supylc.ylindepware.sub.main.MainProcessService
 import java.lang.reflect.InvocationHandler
@@ -34,7 +35,7 @@ class MainProcessServiceBinder {
             return
         }
         val intent = Intent(activity, MainProcessService::class.java)
-        intent.action = MainProcessService.ACTION_BIND
+        intent.action = IndepWareConfigs.getMainServiceBindAction()
         activity.bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE)
     }
 
@@ -55,7 +56,7 @@ class MainProcessServiceBinder {
                     }
                     Log.i(
                         TAG,
-                        "onServiceConnected asBinder=${mMainInterface?.asBinder() == null}, mDeathRecipient is null=${mDeathRecipient == null}",
+                        "onServiceConnected asBinder=${mMainInterface?.asBinder() == null}, mDeathRecipient is null=${mDeathRecipient == null}"
                     )
                 } catch (e: RemoteException) {
                     Log.e(TAG, "onServiceConnected RemoteException")

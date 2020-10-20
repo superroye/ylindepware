@@ -13,7 +13,6 @@ class MainProcessService : Service() {
 
     companion object {
         private const val TAG = "MainProcessService"
-        const val ACTION_BIND = "com.supylc.webindependent.sub.mainprocess.BIND_MAIN_SERVICE"
     }
 
     private var mStub: Any? = null

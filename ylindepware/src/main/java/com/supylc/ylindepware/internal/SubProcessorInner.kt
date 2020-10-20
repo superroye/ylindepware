@@ -64,8 +64,8 @@ internal class SubProcessorInner {
         }
     }
 
-    fun getMainServiceBinder(): MainInterface? {
-        return mService
+    fun getMainServiceBinder(): MainInterface {
+        return mService!!
     }
 
     /**

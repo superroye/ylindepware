@@ -2,7 +2,6 @@ package com.supylc.ylindepware.custom
 
 import android.util.Log
 import com.google.gson.Gson
-import com.supylc.ylindepware.MainInterface
 import com.supylc.ylindepware.base.EventUtils
 import com.supylc.ylindepware.base.MainInterfaceDefault
 

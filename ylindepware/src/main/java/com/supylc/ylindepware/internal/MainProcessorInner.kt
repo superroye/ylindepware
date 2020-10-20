@@ -32,8 +32,8 @@ internal class MainProcessorInner {
         return MainInterfaceStub()
     }
 
-    fun getMainInterface(): MainInterface? {
-        return mService
+    fun getMainInterface(): MainInterface {
+        return mService!!
     }
 
     /**
