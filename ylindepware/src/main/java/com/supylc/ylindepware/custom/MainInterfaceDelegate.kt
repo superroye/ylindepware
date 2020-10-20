@@ -16,21 +16,10 @@ import com.supylc.ylindepware.base.MainInterfaceDefault
 class MainInterfaceDelegate : MainInterfaceDefault() {
 
     companion object {
-        private const val TAG = "MainInterfaceDelegate"
+        const val TAG = "MainInterfaceDelegate"
     }
-
-    private val mGson = Gson()
 
     override fun test(param: String?) {
         Log.i(TAG, "call sc Service test param=${param}")
-    }
-
-    /**
-     * 子进程通过binder发送事件到主进程
-     */
-    override fun sendEvent(className: String, gson: String) {
-        Log.i(TAG, "sendEvent class=${className}")
-        val event = mGson.fromJson(gson, Class.forName(className))
-        EventUtils.sendEvent(event)
     }
 }

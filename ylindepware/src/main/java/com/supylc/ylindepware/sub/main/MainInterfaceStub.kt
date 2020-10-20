@@ -1,5 +1,6 @@
 package com.supylc.ylindepware.sub.main
 
+import android.os.IBinder
 import com.supylc.ylindepware.MainInterface
 import com.supylc.ylindepware.IEventBusCallback
 import com.supylc.ylindepware.custom.MainInterfaceDelegate
@@ -16,6 +17,13 @@ class MainInterfaceStub : MainInterface.Stub(), MainInterface by MainInterfaceDe
 
     companion object {
         private const val TAG = "MainInterfaceStub"
+    }
+
+    /**
+     * 注意，此处不能删
+     */
+    override fun asBinder(): IBinder {
+        return super.asBinder()
     }
 
     override fun registerEventCallback(callback: IEventBusCallback) {

@@ -27,3 +27,6 @@ activity进程化，比如可以用在WebViewActivity的子进程运行，也可
 - 调用外部接口时，用IndepWare.getMainInterface().method1()
 - 发送eventBus时，用IndepWar.sendEvent(event)
 
+### 注意点
+1、调用IndepWare.getMainInterface().method1()时，java编译器提示必须捕获异常，可以转成kotlin，kotlin无须捕获
+
