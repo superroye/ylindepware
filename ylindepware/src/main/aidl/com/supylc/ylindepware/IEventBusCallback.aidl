@@ -1,7 +1,4 @@
-// IEventBusCallback.aidl
 package com.supylc.ylindepware;
-
-// Declare any non-default types here with import statements
 
 /**
 * 监听主进程事件，转发到子进程

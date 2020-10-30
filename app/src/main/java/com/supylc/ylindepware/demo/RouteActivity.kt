@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.supylc.ylindepware.custom.test.Main2SubEvent1
+import com.supylc.ylindepware.demo.custom.test.Main2SubEvent1
 import org.greenrobot.eventbus.EventBus
 
 /**

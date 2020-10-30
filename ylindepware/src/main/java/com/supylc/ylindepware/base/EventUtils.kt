@@ -1,6 +1,6 @@
 package com.supylc.ylindepware.base
 
-import com.supylc.ylindepware.internal.IndepWareConfigs
+import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by Supylc on 2020/10/16.
@@ -8,14 +8,14 @@ import com.supylc.ylindepware.internal.IndepWareConfigs
 object EventUtils {
 
     fun register(subscriber: Any) {
-        IndepWareConfigs.registerEventSubscriber(subscriber)
+        EventBus.getDefault().register(subscriber)
     }
 
     fun unregister(subscriber: Any) {
-        IndepWareConfigs.unregisterEventSubscriber(subscriber)
+        EventBus.getDefault().unregister(subscriber)
     }
 
     fun sendEvent(event: Any) {
-        IndepWareConfigs.sendEvent(event)
+        EventBus.getDefault().post(event)
     }
 }

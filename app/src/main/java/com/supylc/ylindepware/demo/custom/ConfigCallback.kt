@@ -1,15 +1,14 @@
-package com.supylc.ylindepware.custom
+package com.supylc.ylindepware.demo.custom
 
 import androidx.collection.ArraySet
-import com.supylc.ylindepware.custom.test.Sub2MainEvent1
-import com.supylc.ylindepware.custom.test.Sub2MainEvent2
-import com.supylc.ylindepware.internal.IConfig
-import org.greenrobot.eventbus.EventBus
+import com.supylc.ylindepware.demo.custom.test.Sub2MainEvent1
+import com.supylc.ylindepware.demo.custom.test.Sub2MainEvent2
+import com.supylc.ylindepware.internal.IConfigCallback
 
 /**
  * Created by Supylc on 2020/10/16.
  */
-class ConfigProvider : IConfig {
+class ConfigCallback : IConfigCallback {
 
     companion object {
         //连接的主进程Service的Action，主要必须与manifest配置一致
@@ -34,18 +33,6 @@ class ConfigProvider : IConfig {
      */
     override fun needSendMainEventFromSub(clazz: Class<*>): Boolean {
         return mEventClassSet.contains(clazz)
-    }
-
-    override fun registerEventSubscriber(subscriber: Any) {
-        EventBus.getDefault().register(subscriber)
-    }
-
-    override fun unregisterEventSubscriber(subscriber: Any) {
-        EventBus.getDefault().unregister(subscriber)
-    }
-
-    override fun sendEvent(event: Any) {
-        EventBus.getDefault().post(event)
     }
 
     override fun getMainServiceBindAction(): String {

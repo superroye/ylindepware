@@ -13,15 +13,15 @@ object IndepWareProcessor {
     private val mSubProcessorInner = SubProcessorInner()
     private val mMainProcessorInner = MainProcessorInner()
 
-    fun getMainInterface(): MainInterface {
-        if (IndepWareConfigs.isMainProcess()) {
-            return mMainProcessorInner.getMainInterface()
+    fun <T> getMainInterface(clazz: Class<T>): T {
+        if (IndepWareContext.isMainProcess()) {
+            return mMainProcessorInner.getMainInterface(clazz)
         }
-        return mSubProcessorInner.getMainServiceBinder()
+        return mSubProcessorInner.getMainInterface(clazz)
     }
 
     fun initMainInterface(context: Activity) {
-        if (!IndepWareConfigs.isMainProcess()) {
+        if (!IndepWareContext.isMainProcess()) {
             mSubProcessorInner.startMainServiceBind(context)
         } else {
             mMainProcessorInner.initMainInterface()
@@ -60,7 +60,7 @@ object IndepWareProcessor {
      * 当前进程发送事件
      */
     fun sendEvent(event: Any) {
-        if (IndepWareConfigs.isMainProcess()) {
+        if (IndepWareContext.isMainProcess()) {
             return mMainProcessorInner.sendEvent(event)
         }
         return mSubProcessorInner.sendEvent(event)
@@ -78,6 +78,10 @@ object IndepWareProcessor {
      */
     fun releaseOnUnBind() {
         mMainProcessorInner.releaseOnUnBind()
+    }
+
+    fun getMainServiceBinder(): MainInterface? {
+        return mSubProcessorInner.getMainServiceBinder()
     }
 
 }

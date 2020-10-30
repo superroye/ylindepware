@@ -6,10 +6,12 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.supylc.ylindepware.IndepWare
-import com.supylc.ylindepware.base.EventUtils
-import com.supylc.ylindepware.custom.test.Sub2MainEvent1
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
+import com.supylc.ylindepware.IndepWareOptions
+import com.supylc.ylindepware.base.IndepWareConfigBuilder
+import com.supylc.ylindepware.demo.custom.ConfigCallback
+import com.supylc.ylindepware.demo.custom.EventBusListenerDelegate
+import com.supylc.ylindepware.demo.custom.MainServiceInterface
+import com.supylc.ylindepware.demo.custom.MainServiceInterfaceImpl
 
 /**
  * Created by Supylc on 2020/10/12.
@@ -38,15 +40,21 @@ class MyApp : Application() {
                 Log.d(TAG, "======onActivityResumed=$activity")
                 topAct = activity as AppCompatActivity
             }
+
             override fun onActivityPostResumed(activity: Activity) {}
             override fun onActivityPaused(activity: Activity) {}
             override fun onActivityStopped(activity: Activity) {}
             override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
             override fun onActivityDestroyed(activity: Activity) {}
         })
-        EventUtils.register(this)
 
-        IndepWare.init(this)
+        IndepWare.init(this, object : IndepWareOptions {
+            override fun apply(builder: IndepWareConfigBuilder) {
+                builder.setConfigCallback(ConfigCallback())
+                builder.setEventBusListenerInterface(EventBusListenerDelegate::class.java)
+                builder.register(MainServiceInterface::class.java, MainServiceInterfaceImpl())
+            }
+        })
     }
 
 }

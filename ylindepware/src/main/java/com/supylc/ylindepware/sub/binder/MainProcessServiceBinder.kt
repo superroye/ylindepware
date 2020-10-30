@@ -6,16 +6,12 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
 import android.os.IBinder.DeathRecipient
-import android.os.IInterface
 import android.os.RemoteException
 import android.util.Log
 import com.supylc.ylindepware.MainInterface
-import com.supylc.ylindepware.internal.IndepWareConfigs
+import com.supylc.ylindepware.internal.IndepWareContext
 import com.supylc.ylindepware.internal.IndepWareProcessor
 import com.supylc.ylindepware.sub.main.MainProcessService
-import java.lang.reflect.InvocationHandler
-import java.lang.reflect.Method
-import java.lang.reflect.Proxy
 
 /**
  * Created by Supylc on 2020/10/12.
@@ -28,14 +24,13 @@ class MainProcessServiceBinder {
     }
 
     private var mMainInterface: MainInterface? = null
-    private var mMainInterfaceDelegate: MainInterface? = null
 
     fun bind(activity: Context) {
         if (mMainInterface != null && mMainInterface?.asBinder()?.isBinderAlive == true) {
             return
         }
         val intent = Intent(activity, MainProcessService::class.java)
-        intent.action = IndepWareConfigs.getMainServiceBindAction()
+        intent.action = IndepWareContext.getConfigCallback().getMainServiceBindAction()
         activity.bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE)
     }
 
@@ -62,36 +57,25 @@ class MainProcessServiceBinder {
                     Log.e(TAG, "onServiceConnected RemoteException")
                 }
 
-                /**
-                 * 动态代理方式全局捕获异常
-                 */
-                val serviceClass = MainInterface::class.java
-                mMainInterfaceDelegate = Proxy.newProxyInstance(
-                    serviceClass.classLoader,
-                    arrayOf(serviceClass),
-                    ServiceInvokeHandler(mMainInterface!!)
-                ) as MainInterface
-                IndepWareProcessor.setMainServiceBinder(mMainInterfaceDelegate!!)
+                IndepWareProcessor.setMainServiceBinder(mMainInterface!!)
                 /**
                  * 设置事件回调接口
                  */
-                mMainInterfaceDelegate?.registerEventCallback(EventBusCallbackBinder())
+                try {
+                    mMainInterface?.registerEventCallback(EventBusCallbackBinder())
+                } catch (ex: Throwable) {
+                    Log.e(TAG, "registerEventCallback error", ex)
+                }
             }
         }
 
         override fun onServiceDisconnected(name: ComponentName) {
-            Log.i(
-                TAG,
-                "onServiceDisconnected name=${name}"
-            )
+            Log.i(TAG, "onServiceDisconnected name=${name}")
             mMainInterface = null
         }
 
         override fun onBindingDied(name: ComponentName) {
-            Log.i(
-                TAG,
-                "onBindingDied name=${name}"
-            )
+            Log.i(TAG, "onBindingDied name=${name}")
         }
     }
 
@@ -100,41 +84,11 @@ class MainProcessServiceBinder {
             if (mMainInterface == null) {
                 return
             }
-            Log.w(
-                TAG,
-                "DeathRecipient binderDied"
-            )
+            Log.w(TAG, "DeathRecipient binderDied")
             if (mMainInterface?.asBinder() != null) {
                 mMainInterface?.asBinder()?.unlinkToDeath(this, 0)
             }
             mMainInterface = null
-        }
-    }
-
-    class ServiceInvokeHandler(serviceInterface: IInterface) : InvocationHandler {
-
-        private var mServiceInterface: IInterface? = serviceInterface
-
-        override fun invoke(proxy: Any?, method: Method?, args: Array<out Any>?): Any? {
-            var result: Any? = null
-            try {
-                Log.i(
-                    TAG,
-                    "method=${method?.name}"
-                )
-                result = if (args == null) {
-                    method?.invoke(mServiceInterface)
-                } else {
-                    method?.invoke(mServiceInterface, *args)
-                }
-            } catch (e: RemoteException) {
-                Log.w(
-                    TAG,
-                    "ServiceInvokeHandler error!",
-                    e
-                )
-            }
-            return result
         }
     }
 }

@@ -2,10 +2,8 @@ package com.supylc.ylindepware.internal
 
 import android.os.IBinder
 import android.util.Log
-import com.supylc.ylindepware.MainInterface
 import com.supylc.ylindepware.IEventBusCallback
 import com.supylc.ylindepware.base.EventUtils
-import com.supylc.ylindepware.custom.MainInterfaceDelegate
 import com.supylc.ylindepware.sub.main.MainEventBusListener
 import com.supylc.ylindepware.sub.main.MainInterfaceStub
 
@@ -18,13 +16,11 @@ internal class MainProcessorInner {
         private const val TAG = "MainProcessorInner"
     }
 
-    private var mService: MainInterface? = null
     private var mMainEventBusListener: MainEventBusListener? = null
 
     fun initMainInterface() {
-        if (IndepWareConfigs.isMainProcess() && mService == null) {
+        if (IndepWareContext.isMainProcess()) {
             Log.i(TAG, "initMainInterface")
-            mService = MainInterfaceDelegate()
         }
     }
 
@@ -32,8 +28,8 @@ internal class MainProcessorInner {
         return MainInterfaceStub()
     }
 
-    fun getMainInterface(): MainInterface {
-        return mService!!
+    fun <T> getMainInterface(clazz: Class<T>): T {
+        return IndepWareContext.getMainInterfaceImpl(clazz)
     }
 
     /**

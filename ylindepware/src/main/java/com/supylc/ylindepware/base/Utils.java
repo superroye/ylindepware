@@ -2,7 +2,7 @@ package com.supylc.ylindepware.base;
 
 import android.os.Process;
 
-import com.supylc.ylindepware.internal.IndepWareConfigs;
+import com.supylc.ylindepware.internal.IndepWareContext;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -42,6 +42,6 @@ public class Utils {
 
     public static boolean isMainProcess() {
         String processName = getProcessName();
-        return IndepWareConfigs.INSTANCE.getApp().getPackageName().equals(processName);
+        return IndepWareContext.INSTANCE.getApp().getPackageName().equals(processName);
     }
 }

@@ -6,7 +6,7 @@ import androidx.collection.ArraySet
 import com.google.gson.Gson
 import com.supylc.ylindepware.MainInterface
 import com.supylc.ylindepware.base.EventUtils
-import com.supylc.ylindepware.base.MainInterfaceDefault
+import com.supylc.ylindepware.sub.SubInvokeEngine
 import com.supylc.ylindepware.sub.binder.MainProcessServiceBinder
 
 /**
@@ -23,8 +23,9 @@ internal class SubProcessorInner {
     /**
      * 由于子进程的mService异步设置，此处设置默认空实现，保证mService调用不会为空，不然业务方可能会出现大面积崩溃
      */
-    private var mService: MainInterface? = MainInterfaceDefault()
+    private var mServiceBinder: MainInterface? = null
     private var mMainProcessServiceBinder: MainProcessServiceBinder? = null
+    private var mSubInvokeEngine = SubInvokeEngine()
 
     /**
      * 记录当前打开的子进程WebActivity
@@ -59,13 +60,17 @@ internal class SubProcessorInner {
      */
     fun setMainServiceBinder(serviceBinder: MainInterface) {
         Log.i(TAG, "setMainServiceBinder")
-        if (!IndepWareConfigs.isMainProcess()) {
-            mService = serviceBinder
+        if (!IndepWareContext.isMainProcess()) {
+            mServiceBinder = serviceBinder
         }
     }
 
-    fun getMainServiceBinder(): MainInterface {
-        return mService!!
+    fun getMainServiceBinder(): MainInterface? {
+        return mServiceBinder
+    }
+
+    fun <T> getMainInterface(clazz: Class<T>): T {
+        return mSubInvokeEngine.getMainInterfaceProxy(clazz)
     }
 
     /**
@@ -73,11 +78,16 @@ internal class SubProcessorInner {
      */
     fun sendEvent(event: Any) {
         Log.i(TAG, "sendEvent class=${event::class.java.name}")
-        EventUtils.sendEvent(event)
         //是否需要通知主进程
-        if (IndepWareConfigs.needSendMainEventFromSub(event::class.java)) {
+        if (IndepWareContext.getConfigCallback().needSendMainEventFromSub(event::class.java)) {
             val jsonStr = mGson?.toJson(event)
-            mService?.sendEvent(event::class.java.name, jsonStr)
+            try {
+                mServiceBinder?.sendEvent(event::class.java.name, jsonStr)
+            } catch (ex: Throwable) {
+                Log.e(TAG, "sendEvent error", ex)
+            }
+        } else {
+            EventUtils.sendEvent(event)
         }
     }
 
@@ -85,6 +95,8 @@ internal class SubProcessorInner {
      * service是否初始化成功
      */
     fun isServiceReady(): Boolean {
-        return mService?.asBinder()?.isBinderAlive == true
+        return mServiceBinder?.asBinder()?.isBinderAlive == true
     }
+
+
 }

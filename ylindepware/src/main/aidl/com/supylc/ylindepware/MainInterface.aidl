@@ -1,16 +1,15 @@
-// MainInterface.aidl
 package com.supylc.ylindepware;
 import com.supylc.ylindepware.IEventBusCallback;
-// Declare any non-default types here with import statements
+import com.supylc.ylindepware.MethodInvoker;
 /**
 * （注意：该接口名固定不能改）
 */
 interface MainInterface {
 
     /**
-    * 自定义方法, 自由定制
+    * 万能的方法
     */
-    void test(String param);
+    String intentMethod(String interfaceClassName, in MethodInvoker methodInvoker);
 
     /**
     * 设置回调接口----（注意：该函数固定不能改）

@@ -3,7 +3,7 @@ package com.supylc.ylindepware
 import android.app.Activity
 import android.app.Application
 import android.util.Log
-import com.supylc.ylindepware.internal.IndepWareConfigs
+import com.supylc.ylindepware.internal.IndepWareContext
 import com.supylc.ylindepware.internal.IndepWareProcessor
 
 /**
@@ -22,13 +22,9 @@ object IndepWare {
     /**
      * application初始化时调用
      */
-    fun init(app: Application) {
+    fun init(app: Application, options: IndepWareOptions) {
         Log.i(TAG, "init")
-        IndepWareConfigs.setApp(app)
-        if (IndepWareConfigs.isSubActivityProcess()) {
-            Log.i(TAG, "initSubCallback")
-            IndepWareConfigs.initSubCallback()
-        }
+        IndepWareContext.setApp(app, options)
     }
 
     /**
@@ -50,8 +46,8 @@ object IndepWare {
     /**
      * webActivity,JsApi调用该服务
      */
-    fun getMainInterface(): MainInterface {
-        return IndepWareProcessor.getMainInterface()
+    fun <T> getMainInterface(clazz: Class<T>): T {
+        return IndepWareProcessor.getMainInterface(clazz)
     }
 
     /**
