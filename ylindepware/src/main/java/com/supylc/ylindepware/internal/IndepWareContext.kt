@@ -4,6 +4,8 @@ import android.app.Application
 import com.supylc.ylindepware.IndepWareOptions
 import com.supylc.ylindepware.base.IndepWareConfigBuilder
 import com.supylc.ylindepware.base.Utils
+import com.supylc.ylindepware.sub.main.MainInvokeEngine
+import java.util.Collection
 
 /**
  * Created by Supylc on 2020/10/10.
@@ -38,8 +40,18 @@ object IndepWareContext {
                 config.configCallback.getActivityProcessName()
             }" == processName
 
-            if (isSubActivityProcess()) {
-                config.configCallback.initSubCallback()
+            doAfterInit()
+        }
+    }
+
+    private fun doAfterInit() {
+        if (isSubActivityProcess()) {
+            mIndepWareConfig?.configCallback?.initSubCallback()
+        }
+
+        if (isMainProcess()) {
+            getMainInterfaceClassSet()?.forEach {
+                MainInvokeEngine.initMethods(it)
             }
         }
     }
@@ -54,6 +66,10 @@ object IndepWareContext {
 
     private fun isSubActivityProcess(): Boolean {
         return mIsSubActivityProcess
+    }
+
+    fun getMainInterfaceClassSet(): Set<Class<*>>? {
+        return mIndepWareConfig?.interfaces?.keys
     }
 
     fun <T> getMainInterfaceImpl(clazz: Class<T>): T {

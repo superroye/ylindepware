@@ -7,7 +7,6 @@ import com.supylc.ylindepware.IEventBusCallback
 import com.supylc.ylindepware.MethodInvoker
 import com.supylc.ylindepware.base.EventUtils
 import com.supylc.ylindepware.internal.IndepWareProcessor
-import com.supylc.ylindepware.sub.SubInvokeEngine
 
 /**
  * Created by Supylc on 2020/10/13.
@@ -26,7 +25,9 @@ class MainInterfaceStub : MainInterface.Stub() {
      */
     override fun intentMethod(interfaceClassName: String, methodInvoker: MethodInvoker): String? {
         Log.i(TAG, "intentMethod class=$interfaceClassName methodInvoker=${methodInvoker}")
-        return SubInvokeEngine.invokeSerializableMethod(interfaceClassName, methodInvoker)
+        val result = MainInvokeEngine.invokeSerializableMethod(interfaceClassName, methodInvoker)
+        Log.i(TAG, "intentMethod result=$result")
+        return result
     }
 
     override fun registerEventCallback(callback: IEventBusCallback) {
