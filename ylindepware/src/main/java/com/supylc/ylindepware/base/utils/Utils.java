@@ -1,4 +1,4 @@
-package com.supylc.ylindepware.base;
+package com.supylc.ylindepware.base.utils;
 
 import android.os.Process;
 

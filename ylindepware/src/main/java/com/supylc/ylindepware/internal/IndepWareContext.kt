@@ -3,7 +3,7 @@ package com.supylc.ylindepware.internal
 import android.app.Application
 import com.supylc.ylindepware.IndepWareOptions
 import com.supylc.ylindepware.base.IndepWareConfigBuilder
-import com.supylc.ylindepware.base.Utils
+import com.supylc.ylindepware.base.utils.Utils
 import com.supylc.ylindepware.sub.main.MainInvokeEngine
 
 /**

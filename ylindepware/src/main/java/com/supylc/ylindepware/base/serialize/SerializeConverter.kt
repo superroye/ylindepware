@@ -1,9 +1,8 @@
 package com.supylc.ylindepware.base.serialize
 
-import com.supylc.ylindepware.base.GsonUtils
-import com.supylc.ylindepware.base.GsonUtils.fromJson
-import com.supylc.ylindepware.base.GsonUtils.fromJsonAny
-import com.supylc.ylindepware.base.GsonUtils.toJson
+import com.supylc.ylindepware.base.utils.GsonUtils.fromJson
+import com.supylc.ylindepware.base.utils.GsonUtils.fromJsonAny
+import com.supylc.ylindepware.base.utils.GsonUtils.toJson
 import java.util.*
 
 /**

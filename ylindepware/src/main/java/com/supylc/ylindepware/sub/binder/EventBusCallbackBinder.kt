@@ -3,7 +3,7 @@ package com.supylc.ylindepware.sub.binder
 import android.util.Log
 import com.google.gson.Gson
 import com.supylc.ylindepware.IEventBusCallback
-import com.supylc.ylindepware.base.EventUtils
+import com.supylc.ylindepware.base.utils.EventUtils
 
 /**
  * Created by Supylc on 2020/10/12.

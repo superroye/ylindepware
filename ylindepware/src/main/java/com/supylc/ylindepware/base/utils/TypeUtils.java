@@ -1,9 +1,9 @@
-package com.supylc.ylindepware.base.serialize;
+package com.supylc.ylindepware.base.utils;
 
 /**
  * Created by Supylc on 2020/11/3.
  */
-class TypeUtils {
+public class TypeUtils {
 
     public static Class getJavaObjectClass(Class clazz) {
         if (clazz == int.class) {

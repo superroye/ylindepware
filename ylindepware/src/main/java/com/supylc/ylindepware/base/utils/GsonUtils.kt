@@ -1,4 +1,4 @@
-package com.supylc.ylindepware.base
+package com.supylc.ylindepware.base.utils
 
 import com.google.gson.Gson
 

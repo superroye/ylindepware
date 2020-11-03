@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.collection.ArraySet
 import com.google.gson.Gson
 import com.supylc.ylindepware.MainInterface
-import com.supylc.ylindepware.base.EventUtils
+import com.supylc.ylindepware.base.utils.EventUtils
 import com.supylc.ylindepware.sub.SubInvokeEngine
 import com.supylc.ylindepware.sub.binder.MainProcessServiceBinder
 

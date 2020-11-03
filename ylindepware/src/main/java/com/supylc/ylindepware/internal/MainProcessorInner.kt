@@ -3,7 +3,7 @@ package com.supylc.ylindepware.internal
 import android.os.IBinder
 import android.util.Log
 import com.supylc.ylindepware.IEventBusCallback
-import com.supylc.ylindepware.base.EventUtils
+import com.supylc.ylindepware.base.utils.EventUtils
 import com.supylc.ylindepware.sub.main.MainEventBusListener
 import com.supylc.ylindepware.sub.main.MainInterfaceStub
 

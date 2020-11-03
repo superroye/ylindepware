@@ -5,7 +5,7 @@ import com.google.gson.Gson
 import com.supylc.ylindepware.MainInterface
 import com.supylc.ylindepware.IEventBusCallback
 import com.supylc.ylindepware.MethodInvoker
-import com.supylc.ylindepware.base.EventUtils
+import com.supylc.ylindepware.base.utils.EventUtils
 import com.supylc.ylindepware.internal.IndepWareProcessor
 
 /**

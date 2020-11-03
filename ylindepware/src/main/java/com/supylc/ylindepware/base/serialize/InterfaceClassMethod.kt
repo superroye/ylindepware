@@ -1,6 +1,7 @@
 package com.supylc.ylindepware.base.serialize
 
 import androidx.collection.ArrayMap
+import com.supylc.ylindepware.base.utils.TypeUtils
 import java.lang.reflect.Method
 
 /**

@@ -3,7 +3,7 @@ package com.supylc.ylindepware.sub.main
 import android.util.Log
 import com.google.gson.Gson
 import com.supylc.ylindepware.IEventBusCallback
-import com.supylc.ylindepware.base.EventUtils
+import com.supylc.ylindepware.base.utils.EventUtils
 import com.supylc.ylindepware.internal.IndepWareContext
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method

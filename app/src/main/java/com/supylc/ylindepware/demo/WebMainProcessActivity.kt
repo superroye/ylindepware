@@ -5,8 +5,8 @@ import android.util.Log
 import android.view.View
 import androidx.collection.ArrayMap
 import com.supylc.ylindepware.IndepWare
-import com.supylc.ylindepware.base.EventUtils
-import com.supylc.ylindepware.base.Utils
+import com.supylc.ylindepware.base.utils.EventUtils
+import com.supylc.ylindepware.base.utils.Utils
 import com.supylc.ylindepware.demo.custom.MainServiceInterface
 import com.supylc.ylindepware.demo.custom.test.Sub2MainEvent1
 

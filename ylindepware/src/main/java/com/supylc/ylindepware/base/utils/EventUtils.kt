@@ -1,4 +1,4 @@
-package com.supylc.ylindepware.base
+package com.supylc.ylindepware.base.utils
 
 import org.greenrobot.eventbus.EventBus
 
