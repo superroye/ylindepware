@@ -2,8 +2,9 @@ package com.supylc.ylindepware.sub
 
 import android.util.Log
 import androidx.collection.ArrayMap
-import com.google.gson.Gson
 import com.supylc.ylindepware.MethodInvoker
+import com.supylc.ylindepware.base.serialize.SerializeConverter
+import com.supylc.ylindepware.base.serialize.SerializeInvokeParam
 import com.supylc.ylindepware.internal.IndepWareContext
 import com.supylc.ylindepware.internal.IndepWareProcessor
 import java.lang.reflect.InvocationHandler
@@ -18,7 +19,6 @@ class SubInvokeEngine {
 
     companion object {
         private const val TAG = "IntentMethodEngine"
-        private var mGson = Gson()
 
         fun invokeSerializableMethod(
             interfaceClassName: String,
@@ -30,16 +30,16 @@ class SubInvokeEngine {
                 val paramClassArray = Array<Class<*>?>(methodInvoker.paramList.size) { null }
                 val paramValueArray = Array<Any?>(methodInvoker.paramList.size) { null }
                 for (i in paramClassArray.indices) {
-                    paramClassArray[i] = Class.forName(methodInvoker.paramList[i].name)
+                    paramClassArray[i] = Class.forName(methodInvoker.paramList[i].clazzName)
+                    paramValueArray[i] = methodInvoker.paramList[i].value
                     if (Int::class.javaObjectType == paramClassArray[i]) {
                         paramClassArray[i] = Int::class.javaPrimitiveType
                     }
-                    paramValueArray[i] = methodInvoker.paramList[i].
                 }
                 val method = if (paramClassArray.isEmpty()) {
-                    impl.javaClass.getDeclaredMethod(methodInvoker.methodName)
+                    clazz.getMethod(methodInvoker.methodName)
                 } else {
-                    impl.javaClass.getDeclaredMethod(methodInvoker.methodName, *paramClassArray)
+                    clazz.getMethod(methodInvoker.methodName, *paramClassArray)
                 }
                 val result = if (paramValueArray.isEmpty()) {
                     method.invoke(impl)
@@ -47,12 +47,21 @@ class SubInvokeEngine {
                     method.invoke(impl, *paramValueArray)
                 }
                 if (result != null) {
-                    return mGson.toJson(Pair(result.javaClass.name, result.toString()))
+                    return SerializeConverter.methodInvokeToJson(
+                        SerializeInvokeParam(
+                            result.javaClass.name,
+                            result
+                        )
+                    )
                 }
             } catch (ex: Throwable) {
                 Log.w(TAG, "invokeSerializableMethod error", ex)
             }
             return null
+        }
+
+        fun initMethods(clazz: Class<*>) {
+
         }
     }
 
@@ -87,14 +96,11 @@ class SubInvokeEngine {
                 methodInvoker.methodName = method?.name!!
                 if (!args.isNullOrEmpty()) {
                     args.forEach {
-                        methodInvoker.addMethodParam(MethodInvokeParam(it.javaClass.name, it))
+                        methodInvoker.addMethodParam(SerializeInvokeParam(it.javaClass.name, it))
                     }
                 }
                 val jsonStr = serviceBinder.intentMethod(clazzName, methodInvoker)
-                val pair: Pair<String, String> =
-                    mGson.fromJson(jsonStr, Pair::class.java) as Pair<String, String>
-                val clazz: Class<*> = Class.forName(pair.first)
-                result = mGson.fromJson(pair.second, clazz)
+                result = SerializeConverter.getInvokeBeanFromJson(jsonStr)
             } catch (e: Throwable) {
                 Log.w(TAG, "ServiceInvokeHandler error!", e)
             }

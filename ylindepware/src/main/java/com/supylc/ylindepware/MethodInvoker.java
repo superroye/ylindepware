@@ -3,12 +3,11 @@ package com.supylc.ylindepware;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonParser;
-import com.google.gson.TypeAdapter;
-import com.supylc.ylindepware.base.MethodInvokeParam;
+import com.supylc.ylindepware.base.serialize.SerializeConverter;
+import com.supylc.ylindepware.base.serialize.SerializeInvokeParam;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Supylc on 2020/10/29.
@@ -27,8 +26,8 @@ public class MethodInvoker implements Parcelable {
         mParamList = in.readArrayList(String.class.getClassLoader());
     }
 
-    public void addMethodParam(MethodInvokeParam param) {
-        mParamList.add(param);
+    public void addMethodParam(SerializeInvokeParam param) {
+        mParamList.add(SerializeConverter.INSTANCE.methodInvokeToJson(param));
     }
 
     public String getMethodName() {
@@ -39,8 +38,8 @@ public class MethodInvoker implements Parcelable {
         this.mMethodName = methodName;
     }
 
-    public ArrayList<MethodInvokeParam> getParamList() {
-        return mParamList;
+    public List<SerializeInvokeParam> getParamList() {
+        return SerializeConverter.INSTANCE.getMethodInvokeList(mParamList);
     }
 
     @Override
@@ -66,4 +65,11 @@ public class MethodInvoker implements Parcelable {
         return 0;
     }
 
+    @Override
+    public String toString() {
+        return "MethodInvoker{" +
+                "mMethodName='" + mMethodName + '\'' +
+                ", mParamList=" + mParamList +
+                '}';
+    }
 }

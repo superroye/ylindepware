@@ -25,7 +25,7 @@ class MainInterfaceStub : MainInterface.Stub() {
      * 返回json字符串
      */
     override fun intentMethod(interfaceClassName: String, methodInvoker: MethodInvoker): String? {
-        Log.i(TAG, "intentMethod class=$interfaceClassName methodInvoker=$methodInvoker")
+        Log.i(TAG, "intentMethod class=$interfaceClassName methodInvoker=${methodInvoker}")
         return SubInvokeEngine.invokeSerializableMethod(interfaceClassName, methodInvoker)
     }
 

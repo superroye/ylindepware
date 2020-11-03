@@ -13,7 +13,7 @@
 - 支持调用外部的主进程接口
 - 支持发送到主进程，或接收主进程的EventBus
 
-比如在WebActivity需要子进程打开的场景，一个url可以随时选择主进程或子进程打开Activity，而对业务方调用是一致的
+在WebActivity需要子进程打开的场景，一个url可以随时选择主进程或子进程打开Activity，而对业务方调用是一致的
 
 ### 使用步骤
 
@@ -38,5 +38,6 @@
 - 发送eventBus时，用IndepWar.sendEvent(event)
 
 ### 注意点
-- 调用IndepWare.getMainInterface().method1()时，java编译器提示必须捕获异常，可以转成kotlin，kotlin无须捕获
-- 注意事件需要有无参构造方法，否则会到只事件转发失败
+- 调用IndepWare.getMainInterface().method1()时, java编译器提示必须捕获异常，可以转成kotlin，kotlin无须捕获
+- 注意Event需要有无参构造方法，并且注意Event的属性类型(只支持基本类型, 或Serializable序列化类型), 否则会到只事件转发失败
+
