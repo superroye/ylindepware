@@ -5,7 +5,6 @@ import com.supylc.ylindepware.IndepWareOptions
 import com.supylc.ylindepware.base.IndepWareConfigBuilder
 import com.supylc.ylindepware.base.Utils
 import com.supylc.ylindepware.sub.main.MainInvokeEngine
-import java.util.Collection
 
 /**
  * Created by Supylc on 2020/10/10.
@@ -68,12 +67,12 @@ object IndepWareContext {
         return mIsSubActivityProcess
     }
 
-    fun getMainInterfaceClassSet(): Set<Class<*>>? {
-        return mIndepWareConfig?.interfaces?.keys
+    fun getMainInterfaceClassSet(): Set<Class<*>> {
+        return mIndepWareConfig!!.apiImplMap?.keys
     }
 
     fun <T> getMainInterfaceImpl(clazz: Class<T>): T {
-        return mIndepWareConfig!!.interfaces[clazz] as T
+        return mIndepWareConfig!!.apiImplMap[clazz] as T
     }
 
     fun getEventBusListenerInterfaceClass(): Class<*> {
